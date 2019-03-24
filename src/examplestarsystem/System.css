@@ -4,12 +4,11 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 21-Mar-2019, 10:27:22
-    Author     : 8753
+    Created on : 24-Mar-2019, 14:19:15
+    Author     : cyber
 */
-.Title{
-  -fx-text-fill: chartreuse;
-  -fx-border-color: 
+
+.root{
+    -fx-background-color: #383838;
+    -fx-text-decoration:
 }
-    
-    
