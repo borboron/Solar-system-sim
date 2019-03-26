@@ -35,9 +35,9 @@ import javafx.scene.layout.Priority;
  */
 public class ExampleStarSystem extends Application{
         
-    StackPane mainMenuStack = new StackPane();
-    VBox mainMenuVbox = new VBox();
-    VBox settingVbox = new VBox();
+    StackPane mainMenuStack = new StackPane(); //Stackpane used for the main page
+    VBox mainMenuVbox = new VBox(); // VBox used for the main page
+    VBox settingVbox = new VBox(); //VBox used for the setting page
     GridPane selectionpane = new GridPane();
     StackPane settingmenu = new StackPane();
     Group root = new Group();
@@ -47,6 +47,7 @@ public class ExampleStarSystem extends Application{
     Rectangle2D bounds = screen.getVisualBounds();
     StackPane loadmenu = new StackPane();
     VBox save = new VBox();
+    Sliders numberofplanets, numberofstars;
     
     
      public static void main(String[] args) {
@@ -62,11 +63,12 @@ public class ExampleStarSystem extends Application{
 //        window.setY(bounds.getMinY());
 //        window.setWidth(bounds.getWidth());
 //        window.setHeight(bounds.getHeight());
-        
-        root.getChildren().add(mainMenuStack);
+         StackPane mainRoot = new StackPane();
+         mainRoot.getChildren().add(root);
+         root.getChildren().add(mainMenuStack);
       
-        Scene scene = new Scene(root, 800,580);
-        scene.getStylesheets().add("System.css");
+        Scene scene = new Scene(mainRoot, 800,580);
+        scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm());
         primaryStage.setResizable(false);
      
         window.setTitle("Solalsystem.exe");
@@ -138,9 +140,9 @@ public class ExampleStarSystem extends Application{
         Image(getClass().getResourceAsStream("32.png"));
          
         ImageView ivBack = new ImageView(imgBack);
-        //ivBack.setFitWidth(1300);
-//        ivBack.setFitHeight(1000);
-        ivBack.setPreserveRatio(true);
+      //  ivBack.setFitWidth(1300);
+     //   ivBack.setFitHeight(1000);
+        //ivBack.setPreserveRatio(true);
         
         mainMenuStack.getChildren().add(ivBack);
         
@@ -236,8 +238,8 @@ b1.setOnAction((ActionEvent event) -> {
         //Creating an event, activated by clicking the image
         isetting.setOnMouseClicked((MouseEvent e)->{
         System.out.println("Works");
-        root.getChildren().clear();
-        root.getChildren().add(settingmenu);   
+        root.getChildren().clear(); //Clears out the stage
+        root.getChildren().add(settingmenu); // Loads the settig StackPane in the stage   
         });
         mainMenuStack.getChildren().add(isetting);
  
@@ -245,31 +247,20 @@ b1.setOnAction((ActionEvent event) -> {
         private void Selection() {
             Label title = new Label();
             title.setText("Select Objects");
-            title.setStyle("-fx-font-size:30px;");
-            title.setTextFill(Color.web("#FFFFFF"));
             title.setTranslateY(10);
             title.setTranslateX(310);
+            title.getStyleClass().add("label");
             
             Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
             ImageView ivBack = new ImageView(imgBack);
         
-           Label nstars = new Label("Number of Stars");
-           Slider star = new Slider(0,2,1);
-           star.setShowTickLabels(true);
-           star.setShowTickMarks(true);
-           star.setMajorTickUnit(2);
-           star.setMinorTickCount(5);
-           star.setBlockIncrement(10);
-           star.setTranslateX(50);
-           star.setTranslateY(100);
-           star.setMaxWidth(1000);
-           GridPane.setHgrow(star, Priority.NEVER);
-           Slider planet = new Slider(0,10,1);
+            numberofplanets = new Sliders(0,10);
+            numberofstars = new Sliders(0,2);
            
         
            Selection.getChildren().add(ivBack);
            Selection.getChildren().add(selectionpane);
-           selectionpane.getChildren().addAll(title, star, nstars, planet);
+           selectionpane.getChildren().addAll(title,numberofplanets,numberofstars);
             
         }    
     

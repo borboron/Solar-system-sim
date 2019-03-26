@@ -9,6 +9,20 @@ and open the template in the editor.
 */
 
 .root{
-    -fx-background-color: #383838;
-    -fx-text-decoration:
+    
+
+}
+
+.Slider{
+    
+    
+    
+    
+}
+
+.label{
+   -fx-font-size: 30px;
+   -fx-text-fill: #FFFFFF;
+    
+    
 }
