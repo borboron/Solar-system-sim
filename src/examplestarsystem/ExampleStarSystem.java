@@ -8,7 +8,6 @@ package examplestarsystem;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -33,7 +32,7 @@ import javafx.scene.layout.Priority;
  *
  * @author 8753
  */
-public class ExampleStarSystem extends Application{
+public class ExampleStarSystem extends GUI{
         
     StackPane mainMenuStack = new StackPane(); //Stackpane used for the main page
     VBox mainMenuVbox = new VBox(); // VBox used for the main page
@@ -53,11 +52,23 @@ public class ExampleStarSystem extends Application{
      public static void main(String[] args) {
         launch(args);
     }
-    
+
+    public ExampleStarSystem(int width, int height) {
+        super(width, height);
+        super.AddTitle("Solar System Simulator");
+        
+        
+    }
     @Override
+        public void show() {
+        super.show();
+    }
+    
+    
     public void start(Stage primaryStage) throws Exception {
-        // primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(true);
         Stage window = primaryStage;
+        window.getIcons().add(new Image(getClass().getResourceAsStream("downlaod123.png")));
         callingsubroutines(); 
 //        window.setX(bounds.getMinX());
 //        window.setY(bounds.getMinY());
@@ -69,7 +80,7 @@ public class ExampleStarSystem extends Application{
       
         Scene scene = new Scene(mainRoot, 800,580);
         scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm());
-        primaryStage.setResizable(false);
+       primaryStage.setResizable(false);
      
         window.setTitle("Solalsystem.exe");
         window.setScene(scene);
@@ -136,15 +147,15 @@ public class ExampleStarSystem extends Application{
         
         
        //create a background image
-        Image imgBack = new       
-        Image(getClass().getResourceAsStream("32.png"));
-         
-        ImageView ivBack = new ImageView(imgBack);
+//        Image imgBack = new       
+//        Image(getClass().getResourceAsStream("32.png"));
+//         
+//        ImageView ivBack = new ImageView(imgBack);
       //  ivBack.setFitWidth(1300);
      //   ivBack.setFitHeight(1000);
-        //ivBack.setPreserveRatio(true);
+       // ivBack.setPreserveRatio(true);
         
-        mainMenuStack.getChildren().add(ivBack);
+//        mainMenuStack.getChildren().add(ivBack);
         
         mainMenuStack.getChildren().add(mainMenuVbox);  
         mainMenuVbox.getChildren().addAll(Title, btn, btn2);
@@ -263,6 +274,7 @@ b1.setOnAction((ActionEvent event) -> {
            selectionpane.getChildren().addAll(title,numberofplanets,numberofstars);
             
         }    
+
     
 
     
