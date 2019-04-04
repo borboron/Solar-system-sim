@@ -27,7 +27,7 @@ public abstract class CelestialBody {
         this.radius = radius;
         this.gForce = gForce;
         this.name = name;
-        circle = new Circle(x, y, radius, color);
+        this.circle = new Circle(x, y, radius, color);
         this.x = x;
         this.y = y;
     }

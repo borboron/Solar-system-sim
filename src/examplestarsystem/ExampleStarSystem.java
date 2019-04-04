@@ -32,12 +32,12 @@ import javafx.scene.layout.Priority;
  *
  * @author 8753
  */
-public class ExampleStarSystem extends GUI{
+public class ExampleStarSystem extends Application {
         
     StackPane mainMenuStack = new StackPane(); //Stackpane used for the main page
     VBox mainMenuVbox = new VBox(); // VBox used for the main page
     VBox settingVbox = new VBox(); //VBox used for the setting page
-    GridPane selectionpane = new GridPane();
+     GridPane selectionpane = new GridPane();
     StackPane settingmenu = new StackPane();
     Group root = new Group();
    // GridPane hello = new GridPane();
@@ -47,44 +47,39 @@ public class ExampleStarSystem extends GUI{
     StackPane loadmenu = new StackPane();
     VBox save = new VBox();
     Sliders numberofplanets, numberofstars;
+    Buttons createsimulation, loadsimulation;
+    private SimulationWindow SW;
+    final int width= 800;
+    final int height = 800;
     
     
-     public static void main(String[] args) {
+
+    
+    public static void main(String[] args) {
         launch(args);
     }
-
-    public ExampleStarSystem(int width, int height) {
-        super(width, height);
-        super.AddTitle("Solar System Simulator");
         
         
-    }
     @Override
-        public void show() {
-        super.show();
-    }
-    
-    
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setFullScreen(true);
-        Stage window = primaryStage;
+    public void start(Stage window) throws Exception {
+     //window.setFullScreen(true);
+        
         window.getIcons().add(new Image(getClass().getResourceAsStream("downlaod123.png")));
         callingsubroutines(); 
-//        window.setX(bounds.getMinX());
-//        window.setY(bounds.getMinY());
-//        window.setWidth(bounds.getWidth());
-//        window.setHeight(bounds.getHeight());
+
          StackPane mainRoot = new StackPane();
          mainRoot.getChildren().add(root);
          root.getChildren().add(mainMenuStack);
       
-        Scene scene = new Scene(mainRoot, 800,580);
+        Scene scene = new Scene(mainRoot, width,height);
         scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm());
-       primaryStage.setResizable(false);
+       window.setResizable(false);
      
         window.setTitle("Solalsystem.exe");
         window.setScene(scene);
         window.show();
+         SW = new SimulationWindow(900,600);
+        
     }
     
        public void callingsubroutines() {      
@@ -94,33 +89,27 @@ public class ExampleStarSystem extends GUI{
         Selection();
         savepage();
     }
-      
+       
+//       private void createSimulation() {
+//       SW = new SimulationWindow(500,500);
+//       }
+//      
     private void setupMain() {
-        Button btn = new Button();
-        btn.setText("Create a Simulation");
-        btn.setTranslateY(190);
-        btn.setTranslateX(320);
-        btn.setMaxWidth(220);
-    //    btn.setStyle("-fx-font-weight: bold");
-        btn.setStyle("-fx-border-radius: 40px");
-        btn.setStyle("-fx-padding: 10px");
-        btn.setStyle("-fx-font-size: 20px");
-       
-       
-        btn.setOnAction((ActionEvent event)-> {
-            root.getChildren().clear();
-            root.getChildren().add(Selection);
-        });
-        
-//        Button btn1 = new Button();
-//        btn1.setText("Settings");
-//        btn1.setTranslateY(-70);
-//        btn1.setTranslateX(730);
-//        btn1.setStyle("-fx-padding: 5px");
-//        btn1.setOnAction((ActionEvent event) -> {
-//           root.getChildren().clear();
-//           root.getChildren().add(settingmenu);
-//        });
+        Button bn1 = new Button();
+        bn1.setText("Create a Simulation");
+        bn1.setTranslateY(190);
+        bn1.setTranslateX(320);
+        bn1.setMaxWidth(220);
+        bn1.setStyle("-fx-border-radius: 40px");
+        bn1.setStyle("-fx-padding: 10px");
+        bn1.setStyle("-fx-font-size: 20px");
+                bn1.setOnAction((ActionEvent event)-> {
+           root.getChildren().clear();
+           root.getChildren().add(Selection);
+                });
+   //     mainMenuStack.getChildren().add(bn1);
+      //  bn1.setOnAction(e-> SimulationWindow.display("SimulationWindow","Tosimpage");
+           
         
         Button btn2 = new Button();
         btn2.setText("Previous Simulations");
@@ -142,43 +131,11 @@ public class ExampleStarSystem extends GUI{
         Title.setTextFill(Color.web("#FFFFFF"));
         Title.setTranslateY(10);
         Title.setTranslateX(265);
-       
-               
-        
-        
-       //create a background image
-//        Image imgBack = new       
-//        Image(getClass().getResourceAsStream("32.png"));
-//         
-//        ImageView ivBack = new ImageView(imgBack);
-      //  ivBack.setFitWidth(1300);
-     //   ivBack.setFitHeight(1000);
-       // ivBack.setPreserveRatio(true);
-        
-//        mainMenuStack.getChildren().add(ivBack);
+   
         
         mainMenuStack.getChildren().add(mainMenuVbox);  
-        mainMenuVbox.getChildren().addAll(Title, btn, btn2);
-        
-//        //add celestial objects               
-//         Planet p = new Planet(500, 40, 9.8, "Earth2", Color.BLUE, 300, 300);
-//         Planet s = new Planet(500, 40, 9.8, "Earth3", Color.ORANGE, 90, 50);
-//          Planet r = new Planet(500, 40, 9.8, "Earth4", Color.PURPLE   , 400, 200);
-//           Planet n = new Planet(500, 40, 9.8, "Earth5", Color.RED, 50, 50);
-//            Planet i = new Planet(500, 40, 9.8, "Earth6", Color.GOLD, 500, 150);
-//        Star q = new Star(1000, 100, 9.8, "Sun" , Color.YELLOW, 400,300);
-//        
-//        
-//       
-//       mainMenuStack.getChildren().add(p.getCircle());
-//       mainMenuStack.getChildren().add(q.getCircle());
-//       mainMenuStack.getChildren().add(s.getCircle());
-//       mainMenuStack.getChildren().add(r.getCircle());
-//       mainMenuStack.getChildren().add(i.getCircle());
-//       mainMenuStack.getChildren().add(n.getCircle());
-        
-        
-       
+        mainMenuVbox.getChildren().addAll(Title, bn1, btn2);
+         
     }
     
     
@@ -203,12 +160,12 @@ public class ExampleStarSystem extends GUI{
         
         loadmenu.getChildren().add(save);  
         save.getChildren().addAll(header);
-        
-        
-        
+          
     }
     
-    private void settings() {
+ 
+private void settings() {
+      
 Button b1 = new Button();
 b1.setText("Main menu");
 
@@ -256,22 +213,24 @@ b1.setOnAction((ActionEvent event) -> {
  
     }
         private void Selection() {
+           
+            selectionpane.setVgap(6);
+            selectionpane.setHgap(5);
+            
+            
             Label title = new Label();
             title.setText("Select Objects");
             title.setTranslateY(10);
             title.setTranslateX(310);
             title.getStyleClass().add("label");
             
-            Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
-            ImageView ivBack = new ImageView(imgBack);
         
-            numberofplanets = new Sliders(0,10);
-            numberofstars = new Sliders(0,2);
+            numberofplanets = new Sliders(0,2);
+            numberofstars = new Sliders(0,1);
            
-        
-           Selection.getChildren().add(ivBack);
            Selection.getChildren().add(selectionpane);
            selectionpane.getChildren().addAll(title,numberofplanets,numberofstars);
+           
             
         }    
 

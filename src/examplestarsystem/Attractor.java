@@ -3,11 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package examplestarsystem;
 
 /**
  *
  * @author 8753
  */
-public class Prototype {
-    
+ class Attractor {
+  float mass;
+  Vector location;
+  float G;   
+     
+  Attractor() {
+      location = new Vector(width/2,height/2);
+      
 }
