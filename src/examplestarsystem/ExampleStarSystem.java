@@ -48,9 +48,9 @@ public class ExampleStarSystem extends Application {
     VBox save = new VBox();
     Sliders numberofplanets, numberofstars;
     Buttons createsimulation, loadsimulation;
-    private SimulationWindow SW;
-    final int width= 800;
-    final int height = 800;
+    public SimulationWindow SW;
+    double width= 900;
+    double height = 600;
     
     
 
@@ -71,16 +71,33 @@ public class ExampleStarSystem extends Application {
          mainRoot.getChildren().add(root);
          root.getChildren().add(mainMenuStack);
       
-        Scene scene = new Scene(mainRoot, width,height);
+        Scene scene = new Scene(mainRoot, 800,800);
         scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm());
        window.setResizable(false);
      
         window.setTitle("Solalsystem.exe");
         window.setScene(scene);
         window.show();
-         SW = new SimulationWindow(900,600);
+         SW = new SimulationWindow(width,height);
         
     }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+    
     
        public void callingsubroutines() {      
         setupMain();
