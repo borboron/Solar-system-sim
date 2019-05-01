@@ -47,7 +47,7 @@ public class ExampleStarSystem extends Application {
     ArrayList<Planet> Planets = new ArrayList<>();
     ArrayList<Star> Stars = new ArrayList<>();
     AnimationTimer simLoop;
-//    public SimulationWindow SW;
+
 
     public static void main(String[] args) {
         launch(args); // runs the override method
@@ -108,7 +108,7 @@ public class ExampleStarSystem extends Application {
         Title.setTranslateX(460); // Sets X coordinates
 
         Image imgBack = new // Create a background image       
-                Image(getClass().getResourceAsStream("bground.png")); // References the image that is in the same package as the project
+        Image(getClass().getResourceAsStream("32.png")); // References the image that is in the same package as the project
         ImageView ivBack = new ImageView(imgBack); // Displays the image on the window
 
         mainMenuStack.getChildren().add(ivBack); // Adds the image to the StackPane
@@ -133,7 +133,7 @@ public class ExampleStarSystem extends Application {
         header.setTranslateY(10);
         header.setTranslateX(310);
 
-        Image imgBack = new Image(getClass().getResourceAsStream("bground.png"));
+        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
         ImageView ivBack = new ImageView(imgBack);
         loadmenu.getChildren().add(ivBack);
 
@@ -157,7 +157,7 @@ public class ExampleStarSystem extends Application {
         Title.setTranslateY(10);
         Title.setTranslateX(350);
 
-        Image imgBack = new Image(getClass().getResourceAsStream("bground.png"));
+        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
         ImageView ivBack = new ImageView(imgBack);
 
         settingmenu.getChildren().add(ivBack);
@@ -182,22 +182,25 @@ public class ExampleStarSystem extends Application {
         title.setTranslateY(10);
         title.setTranslateX(310);
 
-        Image imgBack = new Image(getClass().getResourceAsStream("bground.png"));
+        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
         ImageView ivBack = new ImageView(imgBack);
-        CreateSimulation();
+
         simulation.getChildren().add(ivBack);
         simulation.getChildren().add(selectionpane);
         selectionpane.getChildren().addAll(title, menu3);
+        CreateSimulation();
     }
 
     private void CreateSimulation() {
-        Star a = new Star(new Point2D(Objects.width / 2, Objects.height / 2), Objects.starMass);     
+        Star a = new Star(new Point2D(Objects.width / 2, Objects.height / 2), Objects.starMass);
         Planet b = new Planet(
-                new Point2D(400, 400), 
-                new Point2D(-3, 0), 
-                new Point2D(0, 0), Objects.planetMass);
-        
-        simulation.getChildren().addAll(a , b);
+                new Point2D(400, 400),
+                new Point2D(-2, 2),
+                new Point2D(2, 4),
+                Objects.planetMass);
+
+        simulation.getChildren().add(a);
+        simulation.getChildren().add(b);
         Planets.add(b);
 
         simLoop = new AnimationTimer() {
@@ -210,23 +213,25 @@ public class ExampleStarSystem extends Application {
                     b.update();
                     b.display();
                 });
-                
-  EventHandler<MouseEvent> planetAdd = new EventHandler<MouseEvent>() {
+
+                EventHandler<MouseEvent> planetAdd = new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        double r = (Math.random() * (-4)) + 3;
+                        double r = (Math.random() * (-4)) - 2 ;
+                        double s  =(Math.random() * (1)) + 2;
                         Planet b = new Planet(
-                                new Point2D(event.getX(),event.getY()),
-                                new Point2D(r , r), 
-                                new Point2D(0 , 0),
+                                new Point2D(event.getX(), event.getY()),
+                                new Point2D(-8,-2),
+                                new Point2D(2,2),
                                 Objects.planetMass);
-                 
+
                         Planets.add(b);
-                        simulation.getChildren().add(b);    
+                        simulation.getChildren().add(b);
                     }
 
                 };
-             
+                scene.setOnMouseClicked(planetAdd);
+
             }
 
         };

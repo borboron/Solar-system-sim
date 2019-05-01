@@ -22,8 +22,8 @@ import javafx.scene.shape.Circle;
     this.location = location;
     this.mass = mass;
     setRadius(Objects.starRadius);
-     setStroke(Color.YELLOW);
-        setFill(Color.YELLOW);
+    setStroke(Color.YELLOW);
+    setFill(Color.YELLOW);
 }
   
  public Point2D attract(Planet b) {
