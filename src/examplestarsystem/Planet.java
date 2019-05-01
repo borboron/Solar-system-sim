@@ -5,18 +5,67 @@
  */
 package examplestarsystem;
 
+
+import java.util.Random;
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+
+
+import javafx.scene.shape.Circle;
 
 /**
  *
  * @author 8753
  */
-public class Planet extends CelestialBody{
-//    Vector vector;
+public class Planet extends Circle {
+    Point2D location;
+    Point2D velocity;
+    Point2D acceleration;
+    double mass;
+
+
     
-    public Planet(double mass, double radius, double gForce, String name, Color color, double x, double y) {
-        super(mass, radius, gForce, name, color, x, y);
-//        vector = new Vector();
+    
+   public Planet(Point2D location, Point2D velocity, Point2D acceleration, double mass) {   
+        this.location = location;
+        this.velocity = velocity;
+        this.acceleration = acceleration;
+        this.mass = mass;
+        setRadius(Objects.planetRadius);
+        
+        Random q = new Random();
+        int red = q.nextInt(255);
+        int green = q.nextInt(255);
+        int blue = q.nextInt(255);
+        setStroke(Color.rgb(red, green, blue, .99));
+        setFill(Color.rgb(red, green, blue, .99));
+        
+
+//        setStroke(Color.GREEN);
+//        setFill(Color.GREEN);
+     //  this.circle = new Circle(radius, color);
+        
+    }
+
+
+    
+    public void applyForce(Point2D force) {
+        
+        Point2D a = new Point2D(force.getX(),force.getY());
+        a = a.multiply(1/Objects.planetMass);
+        acceleration = acceleration.add(a);
     }
     
-}
+    public void update() {
+       velocity =  velocity.add(acceleration);
+       location = location.add(velocity);
+       acceleration = new Point2D(0,0);   
+    }
+    
+    public void display() {
+     setCenterX(location.getX());
+     setCenterY(location.getY());
+     
+    }
+
+}  

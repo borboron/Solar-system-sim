@@ -12,16 +12,18 @@ import javafx.scene.shape.Circle;
  *
  * @author 8753
  */
+//Can't be instantiated
 public abstract class CelestialBody {
 
-    private double mass;
-    private double radius;
-    private double gForce;
-    private String name;
-    private Circle circle;
-    private double x;
-    private double y;
-
+    private double mass; // Creates a double
+    private double radius;  // Creates a double
+    private double gForce;  // Creates a double
+    private String name;  // Creates a String
+    private Circle circle;  // Creates a shape
+    private double x;  // Creates a double
+    private double y;  // Creates a double
+ 
+    // Creates a constructor for the class
     CelestialBody(double mass, double radius, double gForce, String name, Color color, double x, double y) {
         this.mass = mass;
         this.radius = radius;

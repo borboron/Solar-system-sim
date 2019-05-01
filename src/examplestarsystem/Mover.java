@@ -1,86 +1,71 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package examplestarsystem;
-
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
-/**
- *
- * @author 8753
- */
-class Mover {
-    PVector location;
-    PVector velocity;
-    PVector acceleration;
-    double mass;
-    double radius;
-    String name;
-    Circle circle;
-    double x;
-    double y;
-    
-    
-    
-    Mover(double x, double y, double mass, double radius, String name, Color color) {
-        
-        location = new PVector(x,y);
-        velocity = new PVector(0,0);
-        acceleration = new PVector(0,0);
-        this.mass = mass;
-        this.radius = radius;
-        this. name = name;
-        this.circle = new Circle(x, y, radius, color);
-        
-    }
-    
-    public void applyForce(PVector force) {
-        force.div(mass);
-        acceleration.add(force);
-    }
-    
-    public void update() {
-        velocity.add(acceleration);
-        location.add(velocity);
-        acceleration.times(0);     
-    }
-
-    public double getMass() {
-        return mass;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Circle getCircle() {
-        return circle;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCircle(Circle circle) {
-        this.circle = circle;
-    }
-    
-    
-    
-    
-}
+///*
+// * To change this license header, choose License Headers in Project Properties.
+// * To change this template file, choose Tools | Templates
+// * and open the template in the editor.
+// */
+//package examplestarsystem;
+//
+//
+//import java.util.Random;
+//import javafx.geometry.Point2D;
+//import javafx.scene.paint.Color;
+//
+//
+//import javafx.scene.shape.Circle;
+//
+///**
+// *
+// * @author 8753
+// */
+//public class Planet extends Circle {
+//    Point2D location;
+//    Point2D velocity;
+//    Point2D acceleration;
+//    double mass;
+//
+//
+//    
+//    
+//   public Planet(Point2D location, Point2D velocity, Point2D acceleration, double mass) {   
+//        this.location = location;
+//        this.velocity = velocity;
+//        this.acceleration = acceleration;
+//        this.mass = mass;
+//        setRadius(Objects.planetRadius);
+//        
+//        Random q = new Random();
+//        int red = q.nextInt(255);
+//        int green = q.nextInt(255);
+//        int blue = q.nextInt(255);
+//        setStroke(Color.rgb(red, green, blue, .99));
+//        setFill(Color.rgb(red, green, blue, .99));
+//        
+//
+////        setStroke(Color.GREEN);
+////        setFill(Color.GREEN);
+//     //  this.circle = new Circle(radius, color);
+//        
+//    }
+//
+//
+//    
+//    public void applyForce(Point2D force) {
+//        
+//        Point2D a = new Point2D(force.getX(),force.getY());
+//        a = a.multiply(1/Objects.planetMass);
+//        acceleration = acceleration.add(a);
+//    }
+//    
+//    public void update() {
+//       velocity =  velocity.add(acceleration);
+//       location = location.add(velocity);
+//       acceleration = new Point2D(0,0);   
+//    }
+//    
+//    public void display() {
+//     setCenterX(location.getX());
+//     setCenterY(location.getY());
+//     
+//    }
+//
+//}  

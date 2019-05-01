@@ -13,16 +13,13 @@ and open the template in the editor.
 
 }
 
-.Slider{
-    
-    
-    
-    
+.label{
+    -fx-font-size: 30px;
+    -fx-text-fill: #FFFFFF;
 }
 
-.label{
-   -fx-font-size: 30px;
-   -fx-text-fill: #FFFFFF;
-    
-    
+.button{
+    -fx-font-size: 20px;
+    -fx-padding: 10px;
+    -fx-border-radius: 40px;
 }

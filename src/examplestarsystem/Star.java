@@ -4,17 +4,59 @@
  * and open the template in the editor.
  */
 package examplestarsystem;
-
+import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 /**
  *
  * @author 8753
  */
-public class Star extends CelestialBody {
-    
-    public Star(double mass, double radius, double gForce, String name, Color color, double x, double y) {
-        super(mass, radius, gForce, name, color, x, y);
-    }
-    
+  public class Star extends Circle {
+  Point2D location;    
+  double mass;
+  
+
+
+  public Star(Point2D location, double mass) {
+    this.location = location;
+    this.mass = mass;
+    setRadius(Objects.starRadius);
+     setStroke(Color.YELLOW);
+        setFill(Color.YELLOW);
 }
+  
+ public Point2D attract(Planet m) {
+     Point2D force =  location.subtract(m.location);
+     double distance = force.magnitude();
+     force = force.normalize(); 
+     double magnitude = (Objects.G *mass*m.mass) / (distance * distance);
+      force = force.multiply(magnitude);
+     return force;
+      
+  }
+
+   public void display() {
+       setCenterX(location.getX());
+       setCenterY(location.getY());
+   }
+
+ }
+ 
+     
+  
+ 
+    
+      
+
+ 
+
+ 
+ 
+     
+  
+ 
+    
+      
+
+ 

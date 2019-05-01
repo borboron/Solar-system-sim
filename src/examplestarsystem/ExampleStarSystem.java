@@ -7,251 +7,202 @@ package examplestarsystem;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import javafx.scene.control.Slider;
-import javafx.scene.layout.Priority;
-
 
 /**
  *
  * @author 8753
  */
 public class ExampleStarSystem extends Application {
-        
-    StackPane mainMenuStack = new StackPane(); //Stackpane used for the main page
-    VBox mainMenuVbox = new VBox(); // VBox used for the main page
-    VBox settingVbox = new VBox(); //VBox used for the setting page
-     GridPane selectionpane = new GridPane();
-    StackPane settingmenu = new StackPane();
-    Group root = new Group();
-   // GridPane hello = new GridPane();
-    StackPane Selection = new StackPane();
-    Screen screen = Screen.getPrimary();
-    Rectangle2D bounds = screen.getVisualBounds();
-    StackPane loadmenu = new StackPane();
-    VBox save = new VBox();
-    Sliders numberofplanets, numberofstars;
-    Buttons createsimulation, loadsimulation;
-    public SimulationWindow SW;
-    double width= 900;
-    double height = 600;
-    
-    
 
-    
+    Scene scene; // Creates a global scene
+    Group root = new Group(); // Creates a group container
+    StackPane mainMenuStack = new StackPane(); // Creates a StackPane container for the "Main" page
+    VBox mainMenuVbox = new VBox(); // Creates a vertical box for the "Main" page
+    StackPane Selection = new StackPane(); // Creates a StackPane container for the "Selection" page
+    StackPane loadmenu = new StackPane(); // Creates a StackPane container for the "Previous saves" page
+    VBox save = new VBox(); // Creates a vertical box for the "Previous saves" page
+    StackPane settingmenu = new StackPane(); // Creates a StackPane container for the "Settings" page
+    VBox settingVbox = new VBox(); //Creates a vertical box for the "Settings" page
+    GridPane selectionpane = new GridPane(); //Creates a GridPane container for the "Selection" page
+    Buttons Simulation, Save, menu, menu2, menu3;
+    public SimulationWindow SW;
+
     public static void main(String[] args) {
-        launch(args);
+        launch(args); // runs the override method
     }
-        
-        
+
     @Override
     public void start(Stage window) throws Exception {
-     //window.setFullScreen(true);
-        
-        window.getIcons().add(new Image(getClass().getResourceAsStream("downlaod123.png")));
-        callingsubroutines(); 
+        Pane mainRoot = new Pane(); // Creates a container in the stage which is used to hold objects
+        mainRoot.getChildren().add(root);// Places a Group within the Pane. The group is used for buttons and labels
 
-         StackPane mainRoot = new StackPane();
-         mainRoot.getChildren().add(root);
-         root.getChildren().add(mainMenuStack);
-      
-        Scene scene = new Scene(mainRoot, 800,800);
-        scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm());
-       window.setResizable(false);
-     
-        window.setTitle("Solalsystem.exe");
-        window.setScene(scene);
-        window.show();
-         SW = new SimulationWindow(width,height);
-        
+        root.getChildren().add(mainMenuStack); // Adds the mainMenuStack to the empty Group "root"
+
+        window.getIcons().add(new Image(getClass().getResourceAsStream("downlaod123.png"))); // Sets file "donwload123.png" as the icon of the stage window
+
+        scene = new Scene(mainRoot, Objects.width, Objects.height); // Creates a new scene which is layed out using a Pane and has preset width and height parameters
+        scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm()); // Assigns the stylesheet "System.css" to the scene 
+
+        callingsubroutines(); // Calls the subroutine "callingsubroutines" which in turn calls the rest of the subroutines
+        window.setResizable(false); // Makes the window non-resizable
+        window.setTitle("Solalsystem.exe"); // Sets the title of the stage as "SolarSystem.exe"
+        window.setScene(scene); //Places the Scene scene within the empty stage
+        window.show(); //Displays the stage with all of its contents
+        SW = new SimulationWindow(Objects.width,Objects.height); // Creates a new window that is run at the same time as the main
     }
 
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-    
-    
-       public void callingsubroutines() {      
+    // A subroutine that calls all the other subroutines
+    public void callingsubroutines() {
         setupMain();
         settings();
         settingButton();
         Selection();
         savepage();
     }
-       
-//       private void createSimulation() {
-//       SW = new SimulationWindow(500,500);
-//       }
-//      
+
     private void setupMain() {
-        Button bn1 = new Button();
-        bn1.setText("Create a Simulation");
-        bn1.setTranslateY(190);
-        bn1.setTranslateX(320);
-        bn1.setMaxWidth(220);
-        bn1.setStyle("-fx-border-radius: 40px");
-        bn1.setStyle("-fx-padding: 10px");
-        bn1.setStyle("-fx-font-size: 20px");
-                bn1.setOnAction((ActionEvent event)-> {
-           root.getChildren().clear();
-           root.getChildren().add(Selection);
-                });
-   //     mainMenuStack.getChildren().add(bn1);
-      //  bn1.setOnAction(e-> SimulationWindow.display("SimulationWindow","Tosimpage");
-           
-        
-        Button btn2 = new Button();
-        btn2.setText("Previous Simulations");
-        btn2.setTranslateY(240);
-        btn2.setTranslateX(325);
-        btn2.setStyle("-fx-padding: 5px");
-        btn2.setStyle("-fx-font-weight: bold");
-        btn2.setStyle("-fx-background-radius:50");
-        btn2.setStyle("-fx-font-size: 20px");
-        btn2.setOnAction((ActionEvent event)-> {
-           root.getChildren().clear();
-           root.getChildren().add(loadmenu);
-        
+        Simulation = new Buttons("Simulation"); //Creates an instance of a button from the object class
+        Simulation.setText("Create a Simulation"); // Sets button name as "Create a Simulation"
+        Simulation.setTranslateY(190); // Sets Y coordinates
+        Simulation.setTranslateX(320); // Sets X coordinates
+        Simulation.setMaxWidth(208);  // Enlarges button
+        Simulation.setOnAction((ActionEvent event) -> { // Sets action on the button when clicked
+            root.getChildren().clear(); // Clears the Main page from the Group
+            root.getChildren().add(Selection); // Add the Selection page to the Group
         });
-          
-        Label Title = new Label();
-        Title.setText("Solar System Simulator");
-        Title.setStyle("-fx-font-size:30px;");
-        Title.setTextFill(Color.web("#FFFFFF"));
-        Title.setTranslateY(10);
-        Title.setTranslateX(265);
-   
-        
-        mainMenuStack.getChildren().add(mainMenuVbox);  
-        mainMenuVbox.getChildren().addAll(Title, bn1, btn2);
-         
+
+        Save = new Buttons("Save");
+        Save.setText("Previous Simulations");
+        Save.setTranslateY(240); // Sets Y coordinates
+        Save.setTranslateX(325); // Sets X coordinates
+        Save.setOnAction((ActionEvent event) -> { // Sets action on the button when clicked
+            root.getChildren().clear(); // Clears the Main page from the Group
+            root.getChildren().add(loadmenu); // Add the Save page to the Group
+        });
+
+        Label Title = new Label(); // Creates a new label
+        Title.setText("Solar System Simulator"); // Sets the title of the lable as "Solar System Simulator"
+        Title.setTranslateY(10); // Sets Y coordinates
+        Title.setTranslateX(265); // Sets X coordinates
+
+        Image imgBack = new // Create a background image       
+                Image(getClass().getResourceAsStream("32.png")); // References the image that is in the same package as the project
+        ImageView ivBack = new ImageView(imgBack); // Displays the image on the window
+
+        mainMenuStack.getChildren().add(ivBack); // Adds the image to the StackPane
+        mainMenuStack.getChildren().add(mainMenuVbox); // Adds the VBox to the StackPane
+        mainMenuVbox.getChildren().addAll(Title, Simulation, Save); // Adds the label and two buttons to the VBox
+
     }
-    
-    
+
+    // Subroutine for creating the Save page
     private void savepage() {
-        Button b2 = new Button();
-        b2.setText("Main menu");
-        b2.setOnAction((ActionEvent event)-> {
+        menu = new Buttons("menu"); // Creates a button
+        menu.setTranslateX(1);
+        menu.setTranslateY(-30);
+        menu.setText("Main menu");
+        menu.setOnAction((ActionEvent event) -> {
             root.getChildren().clear();
             root.getChildren().add(mainMenuStack);
         });
-        
+
+        Label header = new Label();
+        header.setText("Previous Saves");
+        header.setTranslateY(10);
+        header.setTranslateX(310);
+
         Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
         ImageView ivBack = new ImageView(imgBack);
         loadmenu.getChildren().add(ivBack);
-        
-                Label header = new Label();
-        header.setText("Previous Saves");
-        header.setStyle("-fx-font-size:30px;");
-        header.setTextFill(Color.web("#FFFFFF"));
-        header.setTranslateY(10);
-        header.setTranslateX(310);
-        
-        loadmenu.getChildren().add(save);  
-        save.getChildren().addAll(header);
-          
-    }
-    
- 
-private void settings() {
-      
-Button b1 = new Button();
-b1.setText("Main menu");
 
-b1.setOnAction((ActionEvent event) -> {
-           root.getChildren().clear();
-           root.getChildren().add(mainMenuStack);
+        loadmenu.getChildren().add(save);
+        save.getChildren().addAll(header, menu);
+    }
+
+    // Subroutine for creating the Settings page
+    private void settings() {
+        menu2 = new Buttons("menu2");// Creates a new button
+        menu2.setTranslateX(1);
+        menu2.setTranslateY(-30);
+        menu2.setText("Main menu");
+        menu2.setOnAction((ActionEvent event) -> {
+            root.getChildren().clear();
+            root.getChildren().add(mainMenuStack);
         });
 
         Label Title = new Label();
         Title.setText("Settings");
-        Title.setStyle("-fx-font-size:30px;");
-        Title.setTextFill(Color.web("#FFFFFF"));
         Title.setTranslateY(10);
         Title.setTranslateX(350);
 
         Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
         ImageView ivBack = new ImageView(imgBack);
-        
-        
+
         settingmenu.getChildren().add(ivBack);
-        
-        settingmenu.getChildren().add(settingVbox);  
-        settingVbox.getChildren().addAll(Title, b1);
+
+        settingmenu.getChildren().add(settingVbox);
+        settingVbox.getChildren().addAll(Title, menu2);
     }
-    
-    
-            public void settingButton() {
-        // Createing an image    
+
+    // Subroutine for creating the Selection page
+    private void Selection() {
+        menu3 = new Buttons("menu3"); // Creates a new button
+        menu3.setTranslateX(1);
+        menu3.setTranslateY(10);
+        menu3.setText("Main menu");
+        menu3.setOnAction((ActionEvent event) -> {
+            root.getChildren().clear();
+            root.getChildren().add(mainMenuStack);
+        });
+        
+        Label title = new Label();
+        title.setText("Select Objects");
+        title.setTranslateY(10);
+        title.setTranslateX(310);
+
+        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
+        ImageView ivBack = new ImageView(imgBack);
+
+
+        Selection.getChildren().add(ivBack);
+        Selection.getChildren().add(selectionpane);
+        selectionpane.getChildren().addAll(title,menu3);
+    }
+
+    public void settingButton() {
+        // Creates a new image    
         Image image = new Image(getClass().getResourceAsStream("settingicon.png"));
-        //Setting the isetting
+        //Displays the image
         ImageView isetting = new ImageView(image);
         //Setting the position of the image
         isetting.setTranslateY(-260);
         isetting.setTranslateX(320);
-        
+        //Alters the size of the image
         isetting.setFitHeight(50);
         isetting.setFitWidth(50);
         //Creating an event, activated by clicking the image
-        isetting.setOnMouseClicked((MouseEvent e)->{
-        System.out.println("Works");
-        root.getChildren().clear(); //Clears out the stage
-        root.getChildren().add(settingmenu); // Loads the settig StackPane in the stage   
+        isetting.setOnMouseClicked((MouseEvent e) -> {
+            System.out.println("Works");
+            root.getChildren().clear();
+            root.getChildren().add(settingmenu);
         });
         mainMenuStack.getChildren().add(isetting);
- 
+
     }
-        private void Selection() {
-           
-            selectionpane.setVgap(6);
-            selectionpane.setHgap(5);
-            
-            
-            Label title = new Label();
-            title.setText("Select Objects");
-            title.setTranslateY(10);
-            title.setTranslateX(310);
-            title.getStyleClass().add("label");
-            
-        
-            numberofplanets = new Sliders(0,2);
-            numberofstars = new Sliders(0,1);
-           
-           Selection.getChildren().add(selectionpane);
-           selectionpane.getChildren().addAll(title,numberofplanets,numberofstars);
-           
-            
-        }    
 
-    
-
-    
 }
