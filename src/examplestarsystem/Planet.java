@@ -38,13 +38,7 @@ public class Planet extends Circle {
         int green = q.nextInt(255);
         int blue = q.nextInt(255);
         setStroke(Color.rgb(red, green, blue, .99));
-        setFill(Color.rgb(red, green, blue, .99));
-        
-
-//        setStroke(Color.GREEN);
-//        setFill(Color.GREEN);
-     //  this.circle = new Circle(radius, color);
-        
+        setFill(Color.rgb(red, green, blue, .99));       
     }
 
 

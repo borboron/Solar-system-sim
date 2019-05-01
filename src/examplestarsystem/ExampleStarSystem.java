@@ -5,8 +5,12 @@
  */
 package examplestarsystem;
 
+import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,14 +37,17 @@ public class ExampleStarSystem extends Application {
     Group root = new Group(); // Creates a group container
     StackPane mainMenuStack = new StackPane(); // Creates a StackPane container for the "Main" page
     VBox mainMenuVbox = new VBox(); // Creates a vertical box for the "Main" page
-    StackPane Selection = new StackPane(); // Creates a StackPane container for the "Selection" page
+    Pane simulation = new Pane(); // Creates a StackPane container for the "Selection" page
     StackPane loadmenu = new StackPane(); // Creates a StackPane container for the "Previous saves" page
     VBox save = new VBox(); // Creates a vertical box for the "Previous saves" page
     StackPane settingmenu = new StackPane(); // Creates a StackPane container for the "Settings" page
     VBox settingVbox = new VBox(); //Creates a vertical box for the "Settings" page
     GridPane selectionpane = new GridPane(); //Creates a GridPane container for the "Selection" page
     Buttons Simulation, Save, menu, menu2, menu3;
-    public SimulationWindow SW;
+    ArrayList<Planet> Planets = new ArrayList<>();
+    ArrayList<Star> Stars = new ArrayList<>();
+    AnimationTimer simLoop;
+//    public SimulationWindow SW;
 
     public static void main(String[] args) {
         launch(args); // runs the override method
@@ -63,7 +70,7 @@ public class ExampleStarSystem extends Application {
         window.setTitle("Solalsystem.exe"); // Sets the title of the stage as "SolarSystem.exe"
         window.setScene(scene); //Places the Scene scene within the empty stage
         window.show(); //Displays the stage with all of its contents
-        SW = new SimulationWindow(Objects.width,Objects.height); // Creates a new window that is run at the same time as the main
+//        SW = new SimulationWindow(Objects.width,Objects.height); // Creates a new window that is run at the same time as the main
     }
 
     // A subroutine that calls all the other subroutines
@@ -79,17 +86,17 @@ public class ExampleStarSystem extends Application {
         Simulation = new Buttons("Simulation"); //Creates an instance of a button from the object class
         Simulation.setText("Create a Simulation"); // Sets button name as "Create a Simulation"
         Simulation.setTranslateY(190); // Sets Y coordinates
-        Simulation.setTranslateX(320); // Sets X coordinates
+        Simulation.setTranslateX(575); // Sets X coordinates
         Simulation.setMaxWidth(208);  // Enlarges button
         Simulation.setOnAction((ActionEvent event) -> { // Sets action on the button when clicked
             root.getChildren().clear(); // Clears the Main page from the Group
-            root.getChildren().add(Selection); // Add the Selection page to the Group
+            root.getChildren().add(simulation); // Add the Selection page to the Group
         });
 
         Save = new Buttons("Save");
         Save.setText("Previous Simulations");
         Save.setTranslateY(240); // Sets Y coordinates
-        Save.setTranslateX(325); // Sets X coordinates
+        Save.setTranslateX(575); // Sets X coordinates
         Save.setOnAction((ActionEvent event) -> { // Sets action on the button when clicked
             root.getChildren().clear(); // Clears the Main page from the Group
             root.getChildren().add(loadmenu); // Add the Save page to the Group
@@ -98,10 +105,10 @@ public class ExampleStarSystem extends Application {
         Label Title = new Label(); // Creates a new label
         Title.setText("Solar System Simulator"); // Sets the title of the lable as "Solar System Simulator"
         Title.setTranslateY(10); // Sets Y coordinates
-        Title.setTranslateX(265); // Sets X coordinates
+        Title.setTranslateX(460); // Sets X coordinates
 
         Image imgBack = new // Create a background image       
-                Image(getClass().getResourceAsStream("32.png")); // References the image that is in the same package as the project
+                Image(getClass().getResourceAsStream("bground.png")); // References the image that is in the same package as the project
         ImageView ivBack = new ImageView(imgBack); // Displays the image on the window
 
         mainMenuStack.getChildren().add(ivBack); // Adds the image to the StackPane
@@ -114,7 +121,7 @@ public class ExampleStarSystem extends Application {
     private void savepage() {
         menu = new Buttons("menu"); // Creates a button
         menu.setTranslateX(1);
-        menu.setTranslateY(-30);
+        menu.setTranslateY(-55);
         menu.setText("Main menu");
         menu.setOnAction((ActionEvent event) -> {
             root.getChildren().clear();
@@ -126,7 +133,7 @@ public class ExampleStarSystem extends Application {
         header.setTranslateY(10);
         header.setTranslateX(310);
 
-        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
+        Image imgBack = new Image(getClass().getResourceAsStream("bground.png"));
         ImageView ivBack = new ImageView(imgBack);
         loadmenu.getChildren().add(ivBack);
 
@@ -138,7 +145,7 @@ public class ExampleStarSystem extends Application {
     private void settings() {
         menu2 = new Buttons("menu2");// Creates a new button
         menu2.setTranslateX(1);
-        menu2.setTranslateY(-30);
+        menu2.setTranslateY(-55);
         menu2.setText("Main menu");
         menu2.setOnAction((ActionEvent event) -> {
             root.getChildren().clear();
@@ -150,7 +157,7 @@ public class ExampleStarSystem extends Application {
         Title.setTranslateY(10);
         Title.setTranslateX(350);
 
-        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
+        Image imgBack = new Image(getClass().getResourceAsStream("bground.png"));
         ImageView ivBack = new ImageView(imgBack);
 
         settingmenu.getChildren().add(ivBack);
@@ -169,19 +176,62 @@ public class ExampleStarSystem extends Application {
             root.getChildren().clear();
             root.getChildren().add(mainMenuStack);
         });
-        
+
         Label title = new Label();
         title.setText("Select Objects");
         title.setTranslateY(10);
         title.setTranslateX(310);
 
-        Image imgBack = new Image(getClass().getResourceAsStream("32.png"));
+        Image imgBack = new Image(getClass().getResourceAsStream("bground.png"));
         ImageView ivBack = new ImageView(imgBack);
+        CreateSimulation();
+        simulation.getChildren().add(ivBack);
+        simulation.getChildren().add(selectionpane);
+        selectionpane.getChildren().addAll(title, menu3);
+    }
 
+    private void CreateSimulation() {
+        Star a = new Star(new Point2D(Objects.width / 2, Objects.height / 2), Objects.starMass);     
+        Planet b = new Planet(
+                new Point2D(400, 400), 
+                new Point2D(-3, 0), 
+                new Point2D(0, 0), Objects.planetMass);
+        
+        simulation.getChildren().addAll(a , b);
+        Planets.add(b);
 
-        Selection.getChildren().add(ivBack);
-        Selection.getChildren().add(selectionpane);
-        selectionpane.getChildren().addAll(title,menu3);
+        simLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                a.display();
+                Planets.forEach(b -> {
+                    Point2D force = a.attract(b);
+                    b.applyForce(force);
+                    b.update();
+                    b.display();
+                });
+                
+  EventHandler<MouseEvent> planetAdd = new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        double r = (Math.random() * (-4)) + 3;
+                        Planet b = new Planet(
+                                new Point2D(event.getX(),event.getY()),
+                                new Point2D(r , r), 
+                                new Point2D(0 , 0),
+                                Objects.planetMass);
+                 
+                        Planets.add(b);
+                        simulation.getChildren().add(b);    
+                    }
+
+                };
+             
+            }
+
+        };
+        simLoop.start();
+
     }
 
     public void settingButton() {
@@ -190,11 +240,11 @@ public class ExampleStarSystem extends Application {
         //Displays the image
         ImageView isetting = new ImageView(image);
         //Setting the position of the image
-        isetting.setTranslateY(-260);
-        isetting.setTranslateX(320);
+        isetting.setTranslateY(-380);
+        isetting.setTranslateX(600);
         //Alters the size of the image
-        isetting.setFitHeight(50);
-        isetting.setFitWidth(50);
+        isetting.setFitHeight(75);
+        isetting.setFitWidth(75);
         //Creating an event, activated by clicking the image
         isetting.setOnMouseClicked((MouseEvent e) -> {
             System.out.println("Works");

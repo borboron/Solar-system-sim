@@ -26,11 +26,11 @@ import javafx.scene.shape.Circle;
         setFill(Color.YELLOW);
 }
   
- public Point2D attract(Planet m) {
-     Point2D force =  location.subtract(m.location);
+ public Point2D attract(Planet b) {
+     Point2D force =  location.subtract(b.location);
      double distance = force.magnitude();
      force = force.normalize(); 
-     double magnitude = (Objects.G *mass*m.mass) / (distance * distance);
+     double magnitude = (Objects.G *mass*b.mass) / (distance * distance);
       force = force.multiply(magnitude);
      return force;
       

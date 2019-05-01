@@ -15,8 +15,8 @@ public class Objects {
     public static double starRadius = 80;
     public static double starMass = 400;
     public static double G = 20;
-    public static double width = 800;
-    public static double height = 600;
+    public static double width = 1280;
+    public static double height = 690;
     public static double planetRadius = Math.floor(Math.random()* (upper - lower))+ lower; 
     public static double planetMass = Math.floor(Math.random()* (20))+ 100; 
 
