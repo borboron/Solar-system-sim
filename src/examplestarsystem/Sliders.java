@@ -16,7 +16,7 @@ public class Sliders extends Slider {
     
     public Sliders(int min, int max) {
         this.slide = new Slider(min,max,max/2);
-        this.getStyleClass().add("Slider");
+        this.getStyleClass().add("System.css");
         this.setMin(min);
         this.setMax(max);
         this.setShowTickMarks(true);

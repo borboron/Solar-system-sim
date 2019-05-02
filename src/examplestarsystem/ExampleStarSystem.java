@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -47,7 +48,7 @@ public class ExampleStarSystem extends Application {
     ArrayList<Planet> Planets = new ArrayList<>();
     ArrayList<Star> Stars = new ArrayList<>();
     AnimationTimer simLoop;
-    Sliders PlanetRadius, PlanetMass;
+    Sliders PlanetRadius, PlanetMass, StarRadius;
 
     public static void main(String[] args) {
         launch(args); // runs the override method
@@ -131,7 +132,7 @@ public class ExampleStarSystem extends Application {
         Label header = new Label();
         header.setText("Previous Saves");
         header.setTranslateY(10);
-        header.setTranslateX(310);
+        header.setTranslateX(520);
 
         Image imgBack = new Image(getClass().getResourceAsStream("backgroundimg.png"));
         ImageView ivBack = new ImageView(imgBack);
@@ -155,7 +156,7 @@ public class ExampleStarSystem extends Application {
         Label Title = new Label();
         Title.setText("Settings");
         Title.setTranslateY(10);
-        Title.setTranslateX(350);
+        Title.setTranslateX(570);
 
         Image imgBack = new Image(getClass().getResourceAsStream("backgroundimg.png"));
         ImageView ivBack = new ImageView(imgBack);
@@ -176,14 +177,15 @@ public class ExampleStarSystem extends Application {
             root.getChildren().clear();
             root.getChildren().add(mainMenuStack);
         });
-        
-        reset = new Buttons("reset");
+
+        reset = new Buttons("Reset");
+        reset.setTranslateX(160);
+        reset.setTranslateY(10);
         reset.setOnAction((ActionEvent delete) -> {
-          Planets.clear();
-          
-            
+            Planets.clear();
+
         });
-        
+
         Label mass = new Label("Planet mass");
         mass.setTranslateX(1000);
         mass.setTranslateY(110);
@@ -196,9 +198,12 @@ public class ExampleStarSystem extends Application {
         PlanetMass.setTranslateY(160);
 
         PlanetRadius = new Sliders(5, 20);
-
         PlanetRadius.setTranslateX(1000);
         PlanetRadius.setTranslateY(60);
+
+        StarRadius = new Sliders(20, 80);
+        StarRadius.setTranslateX(1000);
+        StarRadius.setTranslateY(260);
 
         Label title = new Label();
         title.setText("Select Objects");
@@ -210,7 +215,7 @@ public class ExampleStarSystem extends Application {
 
         simulation.getChildren().add(ivBack);
         simulation.getChildren().add(selectionpane);
-        selectionpane.getChildren().addAll(title, menu3, PlanetMass, PlanetRadius, mass, radius, reset);
+        selectionpane.getChildren().addAll(title, menu3, PlanetMass, PlanetRadius, mass, radius, reset, StarRadius);
         CreateSimulation();
     }
 
@@ -229,26 +234,40 @@ public class ExampleStarSystem extends Application {
                     b.display();
                 });
 
+                Stars.forEach(a -> {
+                    a.display();
+                });
+
                 EventHandler<MouseEvent> planetAdd = new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-
+                        MouseButton button = event.getButton();
                         Objects.planetRadius = PlanetRadius.getValue();
                         Objects.planetMass = PlanetMass.getValue();
+                        Objects.starRadius = StarRadius.getValue();
 
-                        double r = (Math.random() * (-4)) - 2;
-                        double s = (Math.random() * (1)) + 2;
-                        Planet b = new Planet(
-                                new Point2D(event.getX(), event.getY()),
-                                new Point2D(-8, -2),
-                                new Point2D(2, 2),
-                                PlanetMass.getValue());
-                        PlanetRadius.getValue();
+//                        double r = (Math.random() * (-4)) - 2;
+//                        double s = (Math.random() * (1)) + 2;
+                        if (button == MouseButton.PRIMARY) {
+                            Planet b = new Planet(
+                                    new Point2D(event.getX(), event.getY()),
+                                    new Point2D(-8, -2),
+                                    new Point2D(2, 2),
+                                    PlanetMass.getValue());
 
-                        Planets.add(b);
-                        simulation.getChildren().add(b);
+                            Planets.add(b);
+                            simulation.getChildren().add(b);
+
+                        } else if (button == MouseButton.SECONDARY) {
+
+                            Star a = new Star(
+                                    new Point2D(event.getX(), event.getY()),
+                                    Objects.starMass);
+                            Stars.add(a);
+                            simulation.getChildren().add(a);
+
+                        }
                     }
-
                 };
                 scene.setOnMouseClicked(planetAdd);
 
