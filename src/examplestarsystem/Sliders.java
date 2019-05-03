@@ -12,15 +12,16 @@ import javafx.scene.control.Slider;
  * @author 8753
  */
 public class Sliders extends Slider {
+
     Slider slide;
-    
+
     public Sliders(int min, int max) {
-        this.slide = new Slider(min,max,max/2);
+        this.slide = new Slider(min, max, max / 2);
         this.getStyleClass().add("System.css");
         this.setMin(min);
         this.setMax(max);
         this.setShowTickMarks(true);
         this.setShowTickLabels(true);
     }
-    
+
 }

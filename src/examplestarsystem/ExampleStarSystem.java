@@ -6,6 +6,7 @@
 package examplestarsystem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -182,16 +183,38 @@ public class ExampleStarSystem extends Application {
         reset.setTranslateX(160);
         reset.setTranslateY(10);
         reset.setOnAction((ActionEvent delete) -> {
+            Iterator it = Planets.iterator();
+            while (it.hasNext()) {
+                Planet p = (Planet) it.next();
+                simulation.getChildren().remove(p);
+            }
+
+            Iterator t = Stars.iterator();
+            while (t.hasNext()) {
+                Star s = (Star) t.next();
+                simulation.getChildren().remove(s);
+            }
+
             Planets.clear();
+            Stars.clear();
 
         });
+        Label title = new Label();
+        title.setText("Simulation");
+        title.setTranslateY(10);
+        title.setTranslateX(540);
 
-        Label mass = new Label("Planet mass");
+        Label mass = new Label("Planet Mass");
         mass.setTranslateX(1000);
         mass.setTranslateY(110);
+
         Label radius = new Label("Planet Radius");
         radius.setTranslateX(1000);
         radius.setTranslateY(10);
+
+        Label sradius = new Label("Star Radius");
+        sradius.setTranslateX(1000);
+        sradius.setTranslateY(210);
 
         PlanetMass = new Sliders(20, 100);
         PlanetMass.setTranslateX(1000);
@@ -205,17 +228,12 @@ public class ExampleStarSystem extends Application {
         StarRadius.setTranslateX(1000);
         StarRadius.setTranslateY(260);
 
-        Label title = new Label();
-        title.setText("Select Objects");
-        title.setTranslateY(10);
-        title.setTranslateX(480);
-
         Image imgBack = new Image(getClass().getResourceAsStream("backgroundimg.png"));
         ImageView ivBack = new ImageView(imgBack);
 
         simulation.getChildren().add(ivBack);
         simulation.getChildren().add(selectionpane);
-        selectionpane.getChildren().addAll(title, menu3, PlanetMass, PlanetRadius, mass, radius, reset, StarRadius);
+        selectionpane.getChildren().addAll(title, menu3, PlanetMass, PlanetRadius, mass, radius, reset, StarRadius, sradius);
         CreateSimulation();
     }
 

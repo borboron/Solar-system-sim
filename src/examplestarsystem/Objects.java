@@ -10,8 +10,7 @@ package examplestarsystem;
  * @author cyber
  */
 public class Objects {
-    public static double upper = 30;
-    public static double lower = 5;
+
     public static double starRadius = 80;
     public static double starMass = 400;
     public static double G = 20;
