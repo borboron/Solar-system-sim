@@ -98,6 +98,10 @@ public class ExampleStarSystem extends Application {
                 simulation.getChildren().remove(s);
             }
 
+            PlanetMass.setValue(0);
+            PlanetRadius.setValue(0);
+            StarRadius.setValue(0);
+
             Planets.clear(); // Clears the "Planets" array list
             Stars.clear(); // Clears the "Stars" array list
             root.getChildren().clear(); // Clears the Main page from the Group
@@ -198,6 +202,10 @@ public class ExampleStarSystem extends Application {
                 simulation.getChildren().remove(s);
             }
 
+            PlanetMass.setValue(0);
+            PlanetRadius.setValue(0);
+            StarRadius.setValue(0);
+
             Planets.clear();
             Stars.clear();
 
@@ -222,7 +230,7 @@ public class ExampleStarSystem extends Application {
         PlanetMass.setTranslateX(1000);
         PlanetMass.setTranslateY(160);
 
-        PlanetRadius = new Sliders(5, 20);
+        PlanetRadius = new Sliders(5, 15);
         PlanetRadius.setTranslateX(1000);
         PlanetRadius.setTranslateY(60);
 
@@ -250,11 +258,11 @@ public class ExampleStarSystem extends Application {
 
                 Stars.forEach(a -> {
                     Planets.forEach(b -> {
-                    Point2D force = a.attract(b);
-                    b.applyForce(force);
-                    b.update();
-                    b.display();
-                });
+                        Point2D force = a.attract(b);
+                        b.applyForce(force);
+                        b.update();
+                        b.display();
+                    });
 
                     a.display();
 

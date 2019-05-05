@@ -12,8 +12,8 @@ package examplestarsystem;
 public class Objects {
 
     public static double starRadius = 80; // Radius of the initial star
-    public static double starMass = 400; // Mass of all the stars
-    public static double G = 20; // Gravity applied on all planets
+    public static double starMass = 2000; // Mass of all the stars
+    public static double G = 3; // Gravity constant 
     public static double width = 1280; // Width of the window
     public static double height = 690; // Height of the window
     public static double planetRadius; // Initialises variable
