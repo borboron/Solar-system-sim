@@ -13,11 +13,12 @@ import javafx.scene.control.Slider;
  */
 public class Sliders extends Slider {
 
-    Slider slide;
+    Slider slide; // Creates a slider
 
+    // Constructor for used to create sliders
     public Sliders(int min, int max) {
         this.slide = new Slider(min, max, max / 2);
-        this.getStyleClass().add("System.css");
+        this.getStyleClass().add("System.css"); // Links the css stylesheet
         this.setMin(min);
         this.setMax(max);
         this.setShowTickMarks(true);

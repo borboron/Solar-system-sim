@@ -14,19 +14,15 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -45,11 +41,11 @@ public class ExampleStarSystem extends Application {
     StackPane settingmenu = new StackPane(); // Creates a StackPane container for the "Settings" page
     VBox settingVbox = new VBox(); //Creates a vertical box for the "Settings" page
     GridPane selectionpane = new GridPane(); //Creates a GridPane container for the "Selection" page
-    Buttons Simulation, Save, menu, menu2, menu3, reset;
-    ArrayList<Planet> Planets = new ArrayList<>();
-    ArrayList<Star> Stars = new ArrayList<>();
-    AnimationTimer simLoop;
-    Sliders PlanetRadius, PlanetMass, StarRadius;
+    Buttons Simulation, Save, menu, menu2, menu3, reset; // Creates global buttons using the "Buttons" class as template
+    ArrayList<Planet> Planets = new ArrayList<>(); // Creates an Array List that is made up of obejcts from the "Planet" class
+    ArrayList<Star> Stars = new ArrayList<>(); // Creates an Array List that is made up of objects from the "Star" class
+    AnimationTimer simLoop; // Global animation timer used to run the simulation
+    Sliders PlanetRadius, PlanetMass, StarRadius; // Creates global sliders using the "Sliders" class as template
 
     public static void main(String[] args) {
         launch(args); // runs the override method
@@ -62,7 +58,7 @@ public class ExampleStarSystem extends Application {
 
         root.getChildren().add(mainMenuStack); // Adds the mainMenuStack to the empty Group "root"
 
-        window.getIcons().add(new Image(getClass().getResourceAsStream("downlaod123.png"))); // Sets file "donwload123.png" as the icon of the stage window
+        window.getIcons().add(new Image(getClass().getResourceAsStream("downlaod123.png"))); // Sets file "donwload123.png" as the icon of the window
 
         scene = new Scene(mainRoot, Objects.width, Objects.height); // Creates a new scene which is layed out using a Pane and has preset width and height parameters
         scene.getStylesheets().add(getClass().getResource("System.css").toExternalForm()); // Assigns the stylesheet "System.css" to the scene 
@@ -72,7 +68,6 @@ public class ExampleStarSystem extends Application {
         window.setTitle("Solalsystem.exe"); // Sets the title of the stage as "SolarSystem.exe"
         window.setScene(scene); //Places the Scene scene within the empty stage
         window.show(); //Displays the stage with all of its contents
-//        SW = new SimulationWindow(Objects.width,Objects.height); // Creates a new window that is run at the same time as the main
     }
 
     // A subroutine that calls all the other subroutines
@@ -80,23 +75,36 @@ public class ExampleStarSystem extends Application {
         setupMain();
         settings();
         settingButton();
-        Selection();
+        Simulation();
         savepage();
     }
 
     private void setupMain() {
-        Simulation = new Buttons("Simulation"); //Creates an instance of a button from the object class
-        Simulation.setText("Create a Simulation"); // Sets button name as "Create a Simulation"
+        Simulation = new Buttons("Create a Simulation"); //Creates an instance of a button from the object class
         Simulation.setTranslateY(190); // Sets Y coordinates
         Simulation.setTranslateX(575); // Sets X coordinates
-        Simulation.setMaxWidth(208);  // Enlarges button
         Simulation.setOnAction((ActionEvent event) -> { // Sets action on the button when clicked
+            Iterator it = Planets.iterator(); // A new iterator that loops through the "Planets" array list
+            // While there are items in the array list the iterator will loop through all of them and remove them from the Pane
+            while (it.hasNext()) {
+                Planet p = (Planet) it.next();
+                simulation.getChildren().remove(p);
+            }
+
+            Iterator t = Stars.iterator(); // A new iterator that loops through the "Stars" array list
+            // While there are items in the array list the iterator will loop through all of them and remove them from the Pane
+            while (t.hasNext()) {
+                Star s = (Star) t.next();
+                simulation.getChildren().remove(s);
+            }
+
+            Planets.clear(); // Clears the "Planets" array list
+            Stars.clear(); // Clears the "Stars" array list
             root.getChildren().clear(); // Clears the Main page from the Group
             root.getChildren().add(simulation); // Add the Selection page to the Group
         });
 
-        Save = new Buttons("Save");
-        Save.setText("Previous Simulations");
+        Save = new Buttons("Previous Simulation"); // Initialises the button "Save"
         Save.setTranslateY(240); // Sets Y coordinates
         Save.setTranslateX(575); // Sets X coordinates
         Save.setOnAction((ActionEvent event) -> { // Sets action on the button when clicked
@@ -121,17 +129,15 @@ public class ExampleStarSystem extends Application {
 
     // Subroutine for creating the Save page
     private void savepage() {
-        menu = new Buttons("menu"); // Creates a button
+        menu = new Buttons("Main menu"); // Creates a button
         menu.setTranslateX(1);
         menu.setTranslateY(-55);
-        menu.setText("Main menu");
         menu.setOnAction((ActionEvent event) -> {
             root.getChildren().clear();
             root.getChildren().add(mainMenuStack);
         });
 
-        Label header = new Label();
-        header.setText("Previous Saves");
+        Label header = new Label("Previous Saves");
         header.setTranslateY(10);
         header.setTranslateX(520);
 
@@ -145,17 +151,15 @@ public class ExampleStarSystem extends Application {
 
     // Subroutine for creating the Settings page
     private void settings() {
-        menu2 = new Buttons("menu2");// Creates a new button
+        menu2 = new Buttons("Main menu");// Creates a new button
         menu2.setTranslateX(1);
         menu2.setTranslateY(-55);
-        menu2.setText("Main menu");
         menu2.setOnAction((ActionEvent event) -> {
             root.getChildren().clear();
             root.getChildren().add(mainMenuStack);
         });
 
-        Label Title = new Label();
-        Title.setText("Settings");
+        Label Title = new Label("Settings");
         Title.setTranslateY(10);
         Title.setTranslateX(570);
 
@@ -169,11 +173,10 @@ public class ExampleStarSystem extends Application {
     }
 
     // Subroutine for creating the Selection page
-    private void Selection() {
-        menu3 = new Buttons("menu3"); // Creates a new button
+    private void Simulation() {
+        menu3 = new Buttons("Main menu"); // Creates a new button
         menu3.setTranslateX(1);
         menu3.setTranslateY(10);
-        menu3.setText("Main menu");
         menu3.setOnAction((ActionEvent event) -> {
             root.getChildren().clear();
             root.getChildren().add(mainMenuStack);
@@ -199,8 +202,7 @@ public class ExampleStarSystem extends Application {
             Stars.clear();
 
         });
-        Label title = new Label();
-        title.setText("Simulation");
+        Label title = new Label("Simulation");
         title.setTranslateY(10);
         title.setTranslateX(540);
 
@@ -238,13 +240,26 @@ public class ExampleStarSystem extends Application {
     }
 
     private void CreateSimulation() {
-        Star a = new Star(new Point2D(Objects.width / 2, Objects.height / 2), Objects.starMass);
-        simulation.getChildren().add(a);
+        Star a = new Star(new Point2D(Objects.width / 2, Objects.height / 2), Objects.starMass); // Creates a star in the center of the screen
+        simulation.getChildren().add(a); // Adds the star to the Pane
 
-        simLoop = new AnimationTimer() {
+        simLoop = new AnimationTimer() { // Creates a new animation timer to run the simulation
             @Override
             public void handle(long now) {
                 a.display();
+
+                Stars.forEach(a -> {
+                    Planets.forEach(b -> {
+                    Point2D force = a.attract(b);
+                    b.applyForce(force);
+                    b.update();
+                    b.display();
+                });
+
+                    a.display();
+
+                });
+
                 Planets.forEach(b -> {
                     Point2D force = a.attract(b);
                     b.applyForce(force);
@@ -252,20 +267,14 @@ public class ExampleStarSystem extends Application {
                     b.display();
                 });
 
-                Stars.forEach(a -> {
-                    a.display();
-                });
-
                 EventHandler<MouseEvent> planetAdd = new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         MouseButton button = event.getButton();
-                        Objects.planetRadius = PlanetRadius.getValue();
-                        Objects.planetMass = PlanetMass.getValue();
-                        Objects.starRadius = StarRadius.getValue();
+                        Objects.planetRadius = PlanetRadius.getValue(); // Assigns "planetRadius" the value of the "PlanetRadius" slider
+                        Objects.planetMass = PlanetMass.getValue(); // Assigns "planeMass" the value of the "PlanetMass" slider
+                        Objects.starRadius = StarRadius.getValue(); // Assigns "starRadius" the value of the "StarRadius" slider
 
-//                        double r = (Math.random() * (-4)) - 2;
-//                        double s = (Math.random() * (1)) + 2;
                         if (button == MouseButton.PRIMARY) {
                             Planet b = new Planet(
                                     new Point2D(event.getX(), event.getY()),
@@ -287,12 +296,12 @@ public class ExampleStarSystem extends Application {
                         }
                     }
                 };
-                scene.setOnMouseClicked(planetAdd);
+                scene.setOnMouseClicked(planetAdd); // When the scene is clicked the mouse event "planetAdd" is run
 
             }
 
         };
-        simLoop.start();
+        simLoop.start(); // Run the animation timer
 
     }
 
@@ -313,7 +322,7 @@ public class ExampleStarSystem extends Application {
             root.getChildren().clear();
             root.getChildren().add(settingmenu);
         });
-        mainMenuStack.getChildren().add(isetting);
+        mainMenuStack.getChildren().add(isetting); // adds image to the StackPane
 
     }
 

@@ -16,12 +16,13 @@ public class Buttons extends Button {
     Button button; // Creates a button
     String label; // Creates a string
 
-    // Creates a constructor for the button
+    // Creates a constructor for a button
     Buttons(String Label) {
         this.button = new Button();
         this.setText(Label);
         this.getStyleClass().add("System.css"); // Links the css stylesheet
         this.setVisible(true);
+        //Sets the size of all buttons
         this.setMinWidth(150);
         this.setMinHeight(80);
         this.label = Label;

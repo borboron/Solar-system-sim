@@ -17,23 +17,26 @@ import javafx.scene.shape.Circle;
  */
 public class Planet extends Circle {
 
-    Point2D location;
+    Point2D location; 
     Point2D velocity;
     Point2D acceleration;
     double mass;
 
-    public Planet(Point2D location, Point2D velocity, Point2D acceleration, double mass) {
+    public Planet(Point2D location, Point2D velocity, Point2D acceleration, double mass) { // Creates constructor with parameters to pass on
         this.location = location;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.mass = mass;
-        setRadius(Objects.planetRadius);
+        setRadius(Objects.planetRadius); // The radius of the planets is the value retrieved from the slider
 
+        //Generates a random colour 
         Random q = new Random();
         int red = q.nextInt(255);
         int green = q.nextInt(255);
         int blue = q.nextInt(255);
+        //Generates a random stroke colour for every plane
         setStroke(Color.rgb(red, green, blue, .99));
+        //Generates a radnom fill colour for every planet
         setFill(Color.rgb(red, green, blue, .99));
     }
 

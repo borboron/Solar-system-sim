@@ -15,7 +15,7 @@ import javafx.scene.shape.Circle;
  */
 public class Star extends Circle {
 
-    Point2D location;
+    Point2D location; 
     double mass;
 
     public Star(Point2D location, double mass) {
