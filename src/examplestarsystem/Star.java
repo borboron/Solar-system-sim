@@ -23,22 +23,22 @@ public class Star extends Circle {
         this.mass = mass;
         setRadius(Objects.starRadius);
         setStroke(Color.YELLOW);
-        setFill(Color.YELLOW);
+        setFill(Color.YELLOW); 
     }
 
     public Point2D attract(Planet b) {
-        Point2D force = location.subtract(b.location);
-        double distance = force.magnitude();
-        force = force.normalize();
-        double magnitude = (Objects.G * mass * b.mass) / (distance * distance);
-        force = force.multiply(magnitude);
+        Point2D force = location.subtract(b.location); // Works out direction of the force
+        double distance = force.magnitude(); // Uses the mganitude of the vector, to find the distance between planet and star
+        force = force.normalize(); // Scales force to 1
+        double magnitude = (Objects.G * mass * b.mass) / (distance * distance); // Works out length of vector in order to work out the attraction
+        force = force.multiply(magnitude); // Mulitplies force by the magnitutde
         return force;
 
     }
 
     public void display() {
-        setCenterX(location.getX());
-        setCenterY(location.getY());
+        setCenterX(location.getX());//Finds out X-axis location
+        setCenterY(location.getY());// Finds out Y-axis location
     }
 
 }

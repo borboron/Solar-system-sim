@@ -40,21 +40,21 @@ public class Planet extends Circle {
         setFill(Color.rgb(red, green, blue, .99));
     }
 
-    public void applyForce(Point2D force) {
+    public void applyForce(Point2D force) { // Function to work out the force applied on the planet by the star
         Point2D a = new Point2D(force.getX(), force.getY());
-        a = a.multiply(1 / Objects.planetMass);
-        acceleration = acceleration.add(a);
+        a = a.multiply(1 / Objects.planetMass); // Works out acceleration
+        acceleration = acceleration.add(a); // Updates new acceleration
     }
 
     public void update() {
-        velocity = velocity.add(acceleration);
-        location = location.add(velocity);
-        acceleration = new Point2D(0, 0);
+        velocity = velocity.add(acceleration); // Updates the velocity
+        location = location.add(velocity); // Updates the location
+        acceleration = new Point2D(0, 0); // Sets the acceleration to 0
     }
 
     public void display() {
-        setCenterX(location.getX());
-        setCenterY(location.getY());
+        setCenterX(location.getX()); // Finds out X-axis location
+        setCenterY(location.getY()); // Finds out Y-axis location
 
     }
 

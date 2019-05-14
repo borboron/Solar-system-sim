@@ -292,6 +292,7 @@ public class ExampleStarSystem extends Application {
 
                             Planets.add(b);
                             simulation.getChildren().add(b);
+                            System.out.println("Left button Clicked");
 
                         } else if (button == MouseButton.SECONDARY) {
 
@@ -300,6 +301,7 @@ public class ExampleStarSystem extends Application {
                                     Objects.starMass);
                             Stars.add(a);
                             simulation.getChildren().add(a);
+                            System.out.println("Right button Clicked");
 
                         }
                     }
